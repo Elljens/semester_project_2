@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script
+      src="https://kit.fontawesome.com/ec3d7ec6ab.js"
+      crossorigin="anonymous"
+    ></script>
+    <link rel="stylesheet" href="../css/style.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Akshar:wght@300..700&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <header class="h-30 bg-gray-300 p-10">
+      <nav class="flex items-center justify-between">
+        <div>
+          <a href="../index.html"><img src="../Group 6.png" alt="logo" /></a>
+        </div>
+        <div class="flex gap-6">
+          <a href="register.html" class="font-heading text-l"
+            ><i class="fa-solid fa-user-plus fa-lg text-brand pr-1"></i
+            >Register</a
+          >
+          <a href="./login.html" class="font-heading text-l"
+            ><i class="fa-solid fa-user fa-lg text-brand pr-1"></i>Log in</a
+          >
+        </div>
+      </nav>
+    </header>
+    <main class="bg-accent min-h-screen">
+      <h1 class="font-heading pt-15 pb-5 text-center text-3xl font-medium">
+        Log in
+      </h1>
+      <p class="text-center text-base">
+        Enter your email and password to log in
+      </p>
+      <form id="login-form" class="mx-auto flex max-w-md flex-col p-10">
+        <label for="email">Email</label>
+        <input
+          id="email"
+          name="email"
+          type="email"
+          placeholder="example@stud.noroff.no"
+          class="mb-3 h-10 rounded-sm border border-gray-300 bg-white p-2 shadow-inner"
+        />
+        <label for="password">Password</label>
+        <input
+          id="password"
+          name="password"
+          type="password"
+          placeholder="password"
+          class="mb-8 h-10 rounded-sm border border-gray-300 bg-white p-2 shadow-inner"
+        />
+        <button
+          id="submit"
+          class="bg-brand font-heading h-12 rounded-sm text-center font-medium text-white shadow-lg"
+        >
+          Log in
+        </button>
+      </form>
+      <p class="text-center">
+        Not registered?<br />
+        Please create a new account
+        <a href="./register.html" class="text-brand font-medium">here</a>
+      </p>
+    </main>
+  </body>
+</html>
