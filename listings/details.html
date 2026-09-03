@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>GoingOnce Online Auctions</title>
+    <script
+      src="https://kit.fontawesome.com/ec3d7ec6ab.js"
+      crossorigin="anonymous"
+    ></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Akshar:wght@300..700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="../css/style.css" />
+    <script type="module" src="./details.js"></script>
+  </head>
+  <body>
+    <header class="sticky top-0 z-30 h-30 bg-gray-200 p-10 shadow-sm">
+      <nav class="flex items-center justify-between">
+        <div>
+          <a href="../index.html"
+            ><img src="../public/Logo.png" alt="logo" class="h-15"
+          /></a>
+        </div>
+        <div class="flex gap-6">
+          <a href="../auth/register.html" class="text-l font-medium"
+            ><i class="fa-solid fa-user-plus fa-lg text-brand pr-1"></i
+            >Register</a
+          >
+          <a href="../auth/login.html" class="text-l font-medium"
+            ><i class="fa-solid fa-user fa-lg text-brand pr-1"></i>Log in</a
+          >
+        </div>
+      </nav>
+    </header>
+    <main class="bg-accent mx-auto min-h-screen">
+      <div id="listing-container" class="flex justify-center gap-5 p-10">
+        <div
+          id="card"
+          class="flex max-w-850 flex-col justify-center bg-white pb-10 shadow-md"
+        ></div>
+      </div>
+      <a
+        href="../index.html"
+        class="bg-brand font-heading mx-auto flex w-sm justify-center rounded-sm p-5 text-xl font-medium text-white shadow-md"
+      >
+        Back to listings</a
+      >
+    </main>
+  </body>
+</html>

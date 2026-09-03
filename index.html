@@ -3,24 +3,68 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
+    <title>GoingOnce Online Auctions</title>
     <script
       src="https://kit.fontawesome.com/ec3d7ec6ab.js"
       crossorigin="anonymous"
     ></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Akshar:wght@300..700&display=swap"
+      rel="stylesheet"
+    />
     <link rel="stylesheet" href="./css/style.css" />
+    <script type="module" src="./index.js"></script>
   </head>
   <body>
-    <header class="h-30 bg-gray-200 p-10">
+    <header class="sticky top-0 z-30 h-30 bg-gray-200 p-10 shadow-sm">
       <nav class="flex items-center justify-between">
         <div>
-          <a href="index.html"><img src="Group 6.png" alt="logo" /></a>
+          <a href="index.html"
+            ><img src="public/Logo.png" alt="logo" class="h-15"
+          /></a>
         </div>
         <div class="flex gap-6">
-          <a href="auth/register.html" class="text-l font-medium">Register</a>
-          <a href="auth/login.html" class="text-l font-medium">Log in</a>
+          <a href="auth/register.html" class="text-l font-medium"
+            ><i class="fa-solid fa-user-plus fa-lg text-brand pr-1"></i
+            >Register</a
+          >
+          <a href="auth/login.html" class="text-l font-medium"
+            ><i class="fa-solid fa-user fa-lg text-brand pr-1"></i>Log in</a
+          >
         </div>
       </nav>
     </header>
+    <main class="bg-accent min-h-screen">
+      <div class="mb-6 flex flex-col gap-4 sm:flex-row">
+        <input
+          type="search"
+          id="searchInput"
+          placeholder="Search auctions..."
+          class="rounded-lg border border-gray-300 px-4 py-2"
+        />
+
+        <select
+          id="sort-items"
+          class="rounded-lg border border-gray-300 bg-white px-4 py-2"
+        >
+          <option value="newest">Newest</option>
+          <option value="ending-soon">Ending soon</option>
+          <option value="tags">Tags</option>
+        </select>
+      </div>
+
+      <div
+        id="all-items-container"
+        class="grid max-w-1000 grid-cols-1 gap-5 p-10 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4"
+      ></div>
+      <button
+        id="load-more-button"
+        class="bg-brand font-heading align-center mx-auto flex w-xs justify-center rounded-lg p-5 text-center text-xl font-medium text-white shadow-lg"
+      >
+        More items
+      </button>
+    </main>
   </body>
 </html>
