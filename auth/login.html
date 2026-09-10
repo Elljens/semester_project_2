@@ -44,6 +44,14 @@
         Enter your email and password to log in
       </p>
       <form id="login-form" class="mx-auto flex max-w-md flex-col p-10">
+        <p
+          id="formError"
+          class="my-2 hidden rounded border border-red-700 bg-red-100 p-3 text-red-700"
+        ></p>
+        <p
+          id="formSuccess"
+          class="my-2 hidden rounded border border-green-700 bg-green-100 p-3 text-green-700"
+        ></p>
         <label for="email">Email</label>
         <input
           id="email"

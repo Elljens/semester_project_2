@@ -9,6 +9,10 @@ let isFetching = false;
 let allItems = [];
 let filteredItems = [];
 let currentSearch = "";
+let currentSort = "newest";
+
+const searchInput = document.getElementById("searchInput");
+const sortSelect = document.getElementById("sort-items");
 
 async function getAllItems(page) {
   if (isFetching) return;
@@ -19,12 +23,12 @@ async function getAllItems(page) {
 
   try {
     const response = await get(
-      `/auction/listings?_active=true&page=${page}&limit=15&_seller=true&_bids=true`,
+      `/auction/listings?_active=true&page=${page}&limit=15&_seller=true&_bids=true&sort=created`,
     );
 
     allItems = [...allItems, ...response.data];
 
-    applySearch(currentSearch);
+    applyFilters();
 
     if (response.meta.isLastPage) {
       loadMoreButton.style.display = "none";
@@ -75,7 +79,13 @@ function renderItems(itemsToRender) {
     image.src = item.media?.[0]?.url || "../public/no_image.png";
     image.alt = item.media?.[0]?.alt || item.title;
 
-    image.classList.add("w-full", "h-65", "object-cover");
+    image.classList.add(
+      "w-full",
+      "h-65",
+      "object-cover",
+      "rounded-lg",
+      "shadow-md",
+    );
 
     image.onerror = () => {
       image.src = "../public/no_image.png";
@@ -89,9 +99,9 @@ function renderItems(itemsToRender) {
     bid.classList.add(
       "font-heading",
       "font-medium",
-      "text-xl",
+      "text-lg",
       "text-brand",
-      "py-5",
+      "py-3",
     );
 
     const credit = document.createElement("p");
@@ -99,19 +109,15 @@ function renderItems(itemsToRender) {
     credit.classList.add(
       "font-heading",
       "font-medium",
-      "text-xl",
+      "text-lg",
       "text-brand",
-      "py-5",
+      "py-3",
     );
-
-    const description = document.createElement("p");
-    description.textContent = item.description;
 
     const countdownContainer = document.createElement("div");
     countdownContainer.classList.add(
       "flex",
       "flex-col",
-      "sm:flex-row",
       "justify-center",
       "p-5",
       "mt-auto",
@@ -121,8 +127,8 @@ function renderItems(itemsToRender) {
     countdownText.textContent = "Auction ends in: ";
     countdownText.classList.add(
       "font-heading",
-      "font-medium",
-      "text-xl",
+      "font-regular",
+      "text-lg",
       "text-center",
     );
 
@@ -130,9 +136,9 @@ function renderItems(itemsToRender) {
     countdown.classList.add(
       "font-heading",
       "font-medium",
-      "text-xl",
+      "text-lg",
       "text-center",
-      "text-brand",
+      "text-blue-500",
     );
 
     Countdown(item.endsAt, countdown);
@@ -143,13 +149,14 @@ function renderItems(itemsToRender) {
     link.classList.add(
       "bg-brand",
       "w-full",
-      "p-3",
+      "p-2",
       "text-white",
       "font-heading",
-      "font-medium",
-      "text-xl",
+      "font-regular",
+      "text-md",
       "text-center",
       "rounded-md",
+      "shadow-md",
     );
 
     bidContainer.appendChild(bid);
@@ -159,7 +166,6 @@ function renderItems(itemsToRender) {
     card.appendChild(title);
     card.appendChild(image);
     card.appendChild(bidContainer);
-    card.appendChild(description);
     card.appendChild(countdownContainer);
     card.appendChild(link);
 
@@ -167,27 +173,44 @@ function renderItems(itemsToRender) {
   });
 }
 
-function applySearch(searchTerm) {
-  currentSearch = searchTerm.toLowerCase().trim();
+function applyFilters() {
+  let items = [...allItems];
 
-  if (!currentSearch) {
-    filteredItems = [...allItems];
-  } else {
-    filteredItems = allItems.filter((item) => {
+  if (currentSearch) {
+    items = items.filter((item) => {
       const title = item.title?.toLowerCase() || "";
       const description = item.description?.toLowerCase() || "";
+      const tags = item.tags?.join(" ").toLowerCase() || "";
 
       return (
-        title.includes(currentSearch) || description.includes(currentSearch)
+        title.includes(currentSearch) ||
+        description.includes(currentSearch) ||
+        tags.includes(currentSearch)
       );
     });
   }
+
+  if (currentSort === "newest") {
+    items.sort((a, b) => new Date(b.created) - new Date(a.created));
+  }
+
+  if (currentSort === "ending") {
+    items.sort((a, b) => new Date(a.endsAt) - new Date(b.endsAt));
+  }
+
+  filteredItems = items;
 
   renderItems(filteredItems);
 }
 
 searchInput.addEventListener("input", (event) => {
-  applySearch(event.target.value);
+  currentSearch = event.target.value.toLowerCase().trim();
+  applyFilters();
+});
+
+sortSelect.addEventListener("change", (event) => {
+  currentSort = event.target.value;
+  applyFilters();
 });
 
 loadMoreButton.addEventListener("click", () => {

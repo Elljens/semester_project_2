@@ -1,39 +1,55 @@
-import { post } from "../service/apiClient.js";
+import { get, put } from "../service/apiClient.js";
 import {
-  validateName,
-  validateEmail,
-  validatePassword,
-  validateBio,
-  validateAvatar,
-  validateBanner,
-} from "../service/validators.js";
-import {
-  nameInput,
-  emailInput,
-  passwordInput,
   bioInput,
   avatarUrlInput,
   avatarAltInput,
   bannerUrlInput,
   bannerAltInput,
 } from "../service/validators.js";
+import {
+  validateBio,
+  validateAvatar,
+  validateBanner,
+} from "../service/validators.js";
 
-const form = document.querySelector("#register-form");
+const form = document.querySelector("#edit-profile-form");
 const formError = document.querySelector("#formError");
 const formSuccess = document.querySelector("#formSuccess");
 
-async function registerNewUser(userDetails) {
+const params = new URLSearchParams(window.location.search);
+const name = params.get("name");
+
+if (!name) {
+  alert("Profile not found");
+}
+
+async function getProfileToEdit() {
   try {
-    const response = await post("/auth/register", userDetails);
+    const result = await get(`/auction/profiles/${name}`);
+
+    const profileToEdit = result.data;
+
+    bioInput.value = profileToEdit.bio;
+    avatarUrlInput.value = profileToEdit.avatar.url;
+    avatarAltInput.value = profileToEdit.avatar.alt;
+    bannerUrlInput.value = profileToEdit.banner.url;
+    bannerAltInput.value = profileToEdit.banner.alt;
+  } catch (error) {}
+}
+
+getProfileToEdit();
+
+async function updateUser(userDetails) {
+  try {
+    const response = await put(`/auction/profiles/${name}`, userDetails);
 
     formError.classList.add("hidden");
 
     formSuccess.classList.remove("hidden");
-    formSuccess.textContent =
-      "Registration successful. Redirecting to login...";
+    formSuccess.textContent = "Update successful. Redirecting to profile...";
 
     setTimeout(() => {
-      window.location.href = "./auth/login.html";
+      window.location.href = `./editProfile.html?name=${name}`;
     }, 3000);
   } catch (error) {
     formSuccess.classList.add("hidden");
@@ -46,30 +62,17 @@ async function registerNewUser(userDetails) {
 function submitForm(event) {
   event.preventDefault();
 
-  const isNameValid = validateName();
-  const isEmailValid = validateEmail();
-  const isPasswordValid = validatePassword();
   const isBioValid = validateBio();
   const isAvatarValid = validateAvatar();
   const isBannerValid = validateBanner();
 
-  const isFormValid =
-    isNameValid &&
-    isEmailValid &&
-    isPasswordValid &&
-    isBioValid &&
-    isAvatarValid &&
-    isBannerValid;
+  const isFormValid = isBioValid && isAvatarValid && isBannerValid;
 
   if (!isFormValid) {
     return;
   }
 
-  const userdata = {
-    name: nameInput.value.trim(),
-    email: emailInput.value.trim(),
-    password: passwordInput.value.trim(),
-  };
+  const userdata = {};
   if (bioInput.value.trim()) {
     userdata.bio = bioInput.value.trim();
   }
@@ -86,7 +89,7 @@ function submitForm(event) {
     };
   }
 
-  registerNewUser(userdata);
+  updateUser(userdata);
   console.log(userdata);
 }
 

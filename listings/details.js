@@ -1,5 +1,6 @@
-import { get } from "../service/apiClient.js";
+import { get, post } from "../service/apiClient.js";
 import { Countdown } from "../service/countdown.js";
+import { getFromLocalStorage } from "../service/utils.js";
 
 const listingContainer = document.getElementById("listing-container");
 const card = document.getElementById("card");
@@ -19,7 +20,14 @@ async function getListing() {
     const image = document.createElement("img");
     image.src = listing.media?.[0]?.url || "../public/no_image.png";
     image.alt = listing.media?.[0]?.alt || listing.title;
-    image.classList.add("h-65", "md:h-100", "lg:h-150", "object-cover", "p-5");
+    image.classList.add(
+      "h-65",
+      "max-w-80",
+      "object-cover",
+      "shadow-md",
+      "rounded-lg",
+      "m-5",
+    );
     image.onerror = () => {
       image.src = "../public/no_image.png";
     };
@@ -32,7 +40,7 @@ async function getListing() {
       "text-2xl",
       "md:text-3xl",
       "text-center",
-      "p-5",
+      "md:text-left",
     );
 
     const seller = document.createElement("p");
@@ -42,12 +50,19 @@ async function getListing() {
       "font-medium",
       "text-xl",
       "text-center",
+      "md:text-left",
     );
 
     const created = document.createElement("p");
     created.textContent =
       "Listed: " + new Date(listing.created).toLocaleString();
-    created.classList.add("text-center");
+    created.classList.add("text-center", "md:text-left");
+
+    const infoContainer = document.createElement("div");
+    infoContainer.classList.add("md:pr-5", "md:py-15");
+
+    const infoBox = document.createElement("div");
+    infoBox.classList.add("flex", "flex-col", "mx-auto", "md:flex-row");
 
     const text = document.createElement("p");
     text.textContent = listing.description;
@@ -66,7 +81,7 @@ async function getListing() {
     countdownText.classList.add(
       "font-heading",
       "font-medium",
-      "text-2xl",
+      "text-xl",
       "text-center",
     );
 
@@ -74,7 +89,7 @@ async function getListing() {
     countdown.classList.add(
       "font-heading",
       "font-medium",
-      "text-2xl",
+      "text-xl",
       "text-center",
       "text-brand",
     );
@@ -103,6 +118,86 @@ async function getListing() {
       "text-brand",
       "p-5",
     );
+
+    const currentUser = getFromLocalStorage("name");
+    const highestBid = listing.bids.length
+      ? Math.max(...listing.bids.map((bid) => bid.amount))
+      : 0;
+
+    const bidForm = document.createElement("form");
+    bidForm.classList.add("flex", "flex-col", "mx-auto", "gap-3", "p-5");
+
+    const placeBid = document.createElement("div");
+    placeBid.classList.add("flex", "flex-row", "py-2");
+
+    const bidLabel = document.createElement("label");
+    bidLabel.textContent = `Place a bid higher than ${highestBid} credits`;
+    bidLabel.setAttribute("for", "bid-amount");
+
+    const bidInput = document.createElement("input");
+    bidInput.type = "number";
+    bidInput.id = "bid-amount";
+    bidInput.name = "amount";
+    bidInput.min = highestBid + 1;
+    bidInput.required = true;
+    bidInput.classList.add("border", "rounded-l-md", "shadow-md");
+
+    const bidButton = document.createElement("button");
+    bidButton.type = "submit";
+    bidButton.textContent = "Place bid";
+    bidButton.classList.add(
+      "bg-brand",
+      "text-white",
+      "px-5",
+      "py-2",
+      "rounded-r-md",
+      "cursor-pointer",
+      "shadow-lg",
+    );
+
+    const bidMessage = document.createElement("p");
+
+    placeBid.appendChild(bidInput);
+    placeBid.appendChild(bidButton);
+    bidForm.appendChild(bidLabel);
+    bidForm.appendChild(placeBid);
+    bidForm.appendChild(bidMessage);
+
+    bidForm.addEventListener("submit", async (event) => {
+      event.preventDefault();
+
+      const amount = Number(bidInput.value);
+
+      if (!currentUser) {
+        bidMessage.textContent = "You must be logged in to place a bid";
+        return;
+      }
+
+      if (currentUser === listing.seller.name) {
+        bidMessage.textContent = "You cannot bid on your own item";
+        return;
+      }
+
+      if (amount <= highestBid) {
+        bidMessage.textContent = `Your bid must be higher than ${highestBid} credits`;
+        return;
+      }
+
+      try {
+        await post(`/auction/listings/${id}/bids`, {
+          amount: amount,
+        });
+
+        bidMessage.textContent = "Bid placed successfully";
+
+        setTimeout(() => {
+          window.location.reload();
+        }, 1000);
+      } catch (error) {
+        bidMessage.textContent = error.message || "Unable to place bid";
+        console.log(error);
+      }
+    });
 
     const bidHistory = document.createElement("div");
 
@@ -148,19 +243,24 @@ async function getListing() {
         });
     }
 
+    infoContainer.appendChild(title);
+    infoContainer.appendChild(seller);
+    infoContainer.appendChild(created);
+
+    infoBox.appendChild(image);
+    infoBox.appendChild(infoContainer);
+
     countdownContainer.appendChild(countdownText);
     countdownContainer.appendChild(countdown);
 
     bidContainer.appendChild(bids);
     bidContainer.appendChild(credit);
 
-    card.appendChild(image);
-    card.appendChild(title);
-    card.appendChild(seller);
-    card.appendChild(created);
+    card.appendChild(infoBox);
     card.appendChild(text);
     card.appendChild(countdownContainer);
     card.appendChild(bidContainer);
+    card.appendChild(bidForm);
     card.appendChild(bidHeading);
     card.appendChild(bidHistory);
 

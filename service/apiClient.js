@@ -4,9 +4,20 @@ import { BASE_URL } from "./utils.js";
 async function apiClient(endpoint, options = {}) {
   const { body, ...customOptions } = options;
 
+  const accessToken = localStorage.getItem("accessToken");
+  const APIKey = localStorage.getItem("APIKey");
+
   const headers = {
     "Content-Type": "application/json",
   };
+
+  if (APIKey) {
+    headers["x-Noroff-API-Key"] = APIKey;
+  }
+
+  if (accessToken) {
+    headers["Authorization"] = `Bearer ${accessToken}`;
+  }
 
   const config = {
     method: body ? "POST" : "GET",
@@ -39,7 +50,7 @@ async function apiClient(endpoint, options = {}) {
     const responseData = await response.json();
 
     if (!response.ok) {
-      const errorMessage =
+      const message =
         responseData.errors?.[0]?.message || `HTTP Error: ${response.status}`;
       throw new ApiError(message, response.status);
     }

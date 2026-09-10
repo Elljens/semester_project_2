@@ -9,5 +9,6 @@ export function getFromLocalStorage(key) {
 export const BASE_URL = "https://v2.api.noroff.dev";
 
 export const accessToken = getFromLocalStorage("accessToken");
+export const APIKey = getFromLocalStorage("APIKey");
 export const name = getFromLocalStorage("name");
 export const id = getFromLocalStorage("id");

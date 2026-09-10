@@ -16,52 +16,96 @@
     />
     <link rel="stylesheet" href="./css/style.css" />
     <script type="module" src="./index.js"></script>
+    <script type="module" src="./service/header.js"></script>
   </head>
   <body>
-    <header class="sticky top-0 z-30 h-30 bg-gray-200 p-10 shadow-sm">
-      <nav class="flex items-center justify-between">
+    <header
+      class="sticky top-0 z-30 h-30 items-center bg-gray-200 p-10 shadow-sm"
+    >
+      <div class="flex items-center justify-between">
         <div>
           <a href="index.html"
-            ><img src="public/Logo.png" alt="logo" class="h-15"
+            ><img src="public/Logo.png" alt="logo" class="h-12"
           /></a>
         </div>
-        <div class="flex gap-6">
-          <a href="auth/register.html" class="text-l font-medium"
-            ><i class="fa-solid fa-user-plus fa-lg text-brand pr-1"></i
-            >Register</a
+        <nav id="logged-out-nav" class="flex hidden gap-2">
+          <a href="auth/register.html" class="text-md text-hidden font-medium"
+            ><i class="fa-solid fa-user-plus"></i>Register</a
           >
           <a href="auth/login.html" class="text-l font-medium"
-            ><i class="fa-solid fa-user fa-lg text-brand pr-1"></i>Log in</a
+            ><i class="fa-solid fa-user"></i>Log in</a
           >
-        </div>
-      </nav>
+        </nav>
+        <nav id="logged-in-nav" class="flex items-center">
+          <div class="pr-3 text-right">
+            <p id="header-name" class="font-heading font-regular"></p>
+            <p id="header-credit" class="font-heading font-medium"></p>
+          </div>
+          <div class="relative">
+            <button
+              id="avatar-button"
+              type="button"
+              aria-label="open user menu"
+              aria-expanded="false"
+              class="block rounded-full"
+            >
+              <img
+                id="header-avatar"
+                src="./public/no_image.png"
+                alt="user-avatar"
+                class="h-15 w-15 rounded-full object-cover"
+              />
+            </button>
+          </div>
+          <div
+            id="user-menu"
+            class="bg-accent absolute right-5 z-50 mt-15 hidden rounded-md py-2 shadow-md"
+          >
+            <a href="./profile/userProfile.html" class="block px-4 py-2"
+              >My profile</a
+            >
+            <button
+              id="logout-button"
+              type="button"
+              class="block w-full px-4 py-2 text-left"
+            >
+              Log out
+            </button>
+          </div>
+        </nav>
+      </div>
     </header>
-    <main class="bg-accent min-h-screen">
-      <div class="mb-6 flex flex-col gap-4 sm:flex-row">
-        <input
-          type="search"
-          id="searchInput"
-          placeholder="Search auctions..."
-          class="rounded-lg border border-gray-300 px-4 py-2"
-        />
+    <main class="bg-accent min-h-screen pb-20">
+      <div class="bg-brand-100 mb-6 flex flex-row justify-center gap-4 p-3">
+        <div class="flex flex-col md:flex-row">
+          <label for="searchInput" class="pr-2">Search listings:</label>
+          <input
+            type="search"
+            id="searchInput"
+            placeholder="Search..."
+            class="rounded-lg border border-gray-300 bg-white px-3 py-1"
+          />
+        </div>
 
-        <select
-          id="sort-items"
-          class="rounded-lg border border-gray-300 bg-white px-4 py-2"
-        >
-          <option value="newest">Newest</option>
-          <option value="ending-soon">Ending soon</option>
-          <option value="tags">Tags</option>
-        </select>
+        <div class="flex flex-col md:flex-row">
+          <label for="sort-items" class="pr-2">Sort by:</label>
+          <select
+            id="sort-items"
+            class="rounded-lg border border-gray-300 bg-white px-4 py-1"
+          >
+            <option value="newest">Newest</option>
+            <option value="ending">Ending soon</option>
+          </select>
+        </div>
       </div>
 
       <div
         id="all-items-container"
-        class="grid max-w-1000 grid-cols-1 gap-5 p-10 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4"
+        class="mx-auto grid w-full max-w-300 gap-5 p-15 sm:grid-cols-2 md:px-30 lg:grid-cols-3 xl:grid-cols-4"
       ></div>
       <button
         id="load-more-button"
-        class="bg-brand font-heading align-center mx-auto flex w-xs justify-center rounded-lg p-5 text-center text-xl font-medium text-white shadow-lg"
+        class="bg-brand font-heading align-center mx-auto flex w-xs justify-center rounded-lg p-2 text-center text-sm font-medium text-white shadow-lg"
       >
         More items
       </button>
