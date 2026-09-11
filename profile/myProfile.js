@@ -1,10 +1,10 @@
 import { get, del } from "../service/apiClient.js";
 import { name } from "../service/utils.js";
+import { Countdown } from "../service/countdown.js";
 
 const profileContainer = document.getElementById("profile-container");
 const myListingContainer = document.getElementById("my-listings-container");
 const myBidsContainer = document.getElementById("my-bids-container");
-const myWinsContainer = document.getElementById("auctions-won-container");
 
 async function getProfile() {
   try {
@@ -32,7 +32,7 @@ async function getProfile() {
 
     const userName = document.createElement("h1");
     userName.textContent = profile.name;
-    userName.classList.add("font-heading", "font-medium", "text-2xl");
+    userName.classList.add("font-heading", "font-medium", "text-xl");
 
     const userEmail = document.createElement("p");
     userEmail.textContent = profile.email;
@@ -47,14 +47,14 @@ async function getProfile() {
     credit.classList.add(
       "font-heading",
       "font-medium",
-      "text-2xl",
+      "text-xl",
       "pl-23",
       "pt-5",
     );
 
     const editButton = document.createElement("button");
     editButton.textContent = "Edit profile";
-    editButton.classList.add("font-heading", "text-brand", "text-xl", "pl-23");
+    editButton.classList.add("font-heading", "text-brand", "text-lg", "pl-23");
 
     editButton.addEventListener("click", () => {
       window.location.href = `./editProfile.html?name=${name}`;
@@ -105,28 +105,52 @@ async function getProfile() {
         "shadow-md",
         "max-w-320",
         "overflow-hidden",
-        "p-5",
+        "px-5",
+        "py-3",
       );
 
       const image = document.createElement("img");
       image.src = listing.media?.[0]?.url || "../public/no_image.png";
       image.alt = listing.media?.[0]?.alt || listing.title;
-      image.classList.add("h-65", "md:h-100", "lg:h-150", "object-cover");
-
-      const content = document.createElement("div");
-      content.classList.add("p-5");
+      image.classList.add("h-65", "object-cover");
 
       const title = document.createElement("h3");
       title.textContent = listing.title;
-      title.classList.add("font-heading", "font-medium", "text-xl");
+      title.classList.add(
+        "font-heading",
+        "font-medium",
+        "text-xl",
+        "text-center",
+        "min-h-16",
+      );
 
-      const description = document.createElement("p");
-      description.textContent = listing.description || "No description";
-      description.classList.add("mt-2");
+      const countdownContainer = document.createElement("div");
+      countdownContainer.classList.add(
+        "flex",
+        "flex-col",
+        "justify-center",
+        "p-2",
+      );
 
-      const endsAt = document.createElement("p");
-      endsAt.textContent = "Ends: " + new Date(listing.endsAt).toLocaleString();
-      endsAt.classList.add("mt-3", "text-sm");
+      const countdownText = document.createElement("p");
+      countdownText.textContent = "Auction ends in: ";
+      countdownText.classList.add(
+        "font-heading",
+        "font-regular",
+        "text-lg",
+        "text-center",
+      );
+
+      const countdown = document.createElement("p");
+      countdown.classList.add(
+        "font-heading",
+        "font-medium",
+        "text-lg",
+        "text-center",
+        "text-brand",
+      );
+
+      Countdown(listing.endsAt, countdown);
 
       const link = document.createElement("a");
       link.href = `../listings/details.html?id=${listing.id}`;
@@ -134,9 +158,9 @@ async function getProfile() {
         "bg-brand",
         "text-white",
         "text-center",
-        "p-3",
+        "p-1",
         "mx-5",
-        "my-2",
+        "my-1",
         "rounded-md",
         "shadow-md",
       );
@@ -150,9 +174,9 @@ async function getProfile() {
         "bg-blue-500",
         "text-white",
         "text-center",
-        "p-3",
+        "p-1",
         "mx-5",
-        "my-2",
+        "my-1",
         "rounded-md",
         "shadow-md",
       );
@@ -163,9 +187,9 @@ async function getProfile() {
         "text-brand",
         "border",
         "border-brand-700",
-        "p-3",
+        "p-1",
         "mx-5",
-        "my-2",
+        "my-1",
         "rounded-md",
         "shadow-md",
       );
@@ -188,12 +212,12 @@ async function getProfile() {
         } catch (error) {}
       });
 
-      content.appendChild(title);
-      content.appendChild(description);
-      content.appendChild(endsAt);
+      countdownContainer.appendChild(countdownText);
+      countdownContainer.appendChild(countdown);
 
+      card.appendChild(title);
       card.appendChild(image);
-      card.appendChild(content);
+      card.appendChild(countdownContainer);
       card.appendChild(link);
       card.appendChild(editLink);
       card.appendChild(deleteBtn);
@@ -218,103 +242,57 @@ async function getProfile() {
         "flex",
         "flex-col",
         "justify-center",
-        "max-w-320",
         "bg-white",
         "rounded-lg",
         "shadow-md",
+        "max-w-320",
         "overflow-hidden",
-        "p-5",
+        "px-5",
+        "py-3",
       );
 
       const image = document.createElement("img");
       image.src = listing.media?.[0]?.url || "../public/no_image.png";
       image.alt = listing.media?.[0]?.alt || listing.title;
-      image.classList.add("h-65", "md:h-100", "lg:h-150", "object-cover");
-
-      const content = document.createElement("div");
-      content.classList.add("p-5");
+      image.classList.add("h-65", "object-cover");
 
       const title = document.createElement("h3");
       title.textContent = listing.title;
-      title.classList.add("font-heading", "font-medium", "text-xl");
-
-      const description = document.createElement("p");
-      description.textContent = listing.description || "No description";
-      description.classList.add("mt-2");
-
-      const endsAt = document.createElement("p");
-      endsAt.textContent = "Ends: " + new Date(listing.endsAt).toLocaleString();
-      endsAt.classList.add("mt-3", "text-sm");
-
-      const link = document.createElement("a");
-      link.href = `../listings/details.html?id=${listing.id}`;
-      link.classList.add(
-        "bg-brand",
-        "text-white",
+      title.classList.add(
+        "font-heading",
+        "font-medium",
+        "text-xl",
         "text-center",
-        "p-3",
-        "mx-5",
-        "my-2",
-        "rounded-md",
-        "shadow-md",
+        "min-h-16",
       );
-      link.textContent = "View listing";
 
-      content.appendChild(title);
-      content.appendChild(description);
-      content.appendChild(endsAt);
-
-      card.appendChild(image);
-      card.appendChild(content);
-      card.appendChild(link);
-
-      myBidsContainer.appendChild(card);
-    });
-
-    if (profile.wins.length === 0) {
-      const noWins = document.createElement("p");
-      noWins.textContent = "You have not won any auctions yet";
-
-      myWinsContainer.appendChild(noWins);
-    }
-
-    profile.wins.forEach((listing) => {
-      const card = document.createElement("div");
-      card.classList.add(
+      const countdownContainer = document.createElement("div");
+      countdownContainer.classList.add(
         "flex",
         "flex-col",
         "justify-center",
-        "bg-white",
-        "rounded-lg",
-        "shadow-md",
-        "overflow-hidden",
+        "p-2",
       );
 
-      const image = document.createElement("img");
-      image.src = listing.media?.[0]?.url || "../public/no_image.png";
-      image.alt = listing.media?.[0]?.alt || listing.title;
-      image.classList.add(
-        "h-65",
-        "md:h-100",
-        "lg:h-150",
-        "object-cover",
-        "px-5",
+      const countdownText = document.createElement("p");
+      countdownText.textContent = "Auction ends in: ";
+      countdownText.classList.add(
+        "font-heading",
+        "font-regular",
+        "text-lg",
+        "text-center",
       );
 
-      const content = document.createElement("div");
-      content.classList.add("p-5");
+      const countdown = document.createElement("p");
+      countdown.classList.add(
+        "font-heading",
+        "font-medium",
+        "text-lg",
+        "text-center",
+        "text-brand",
+      );
 
-      const title = document.createElement("h3");
-      title.textContent = listing.title;
-      title.classList.add("font-heading", "font-medium", "text-xl");
-
-      const description = document.createElement("p");
-      description.textContent = listing.description || "No description";
-      description.classList.add("mt-2");
-
-      const endsAt = document.createElement("p");
-      endsAt.textContent = "Ends: " + new Date(listing.endsAt).toLocaleString();
-      endsAt.classList.add("mt-3", "text-sm");
+      Countdown(listing.endsAt, countdown);
 
       const link = document.createElement("a");
       link.href = `../listings/details.html?id=${listing.id}`;
@@ -322,23 +300,23 @@ async function getProfile() {
         "bg-brand",
         "text-white",
         "text-center",
-        "p-3",
+        "p-1",
         "mx-5",
-        "my-2",
+        "my-1",
         "rounded-md",
         "shadow-md",
       );
       link.textContent = "View listing";
 
-      content.appendChild(title);
-      content.appendChild(description);
-      content.appendChild(endsAt);
+      countdownContainer.appendChild(countdownText);
+      countdownContainer.appendChild(countdown);
 
+      card.appendChild(title);
       card.appendChild(image);
-      card.appendChild(content);
+      card.appendChild(countdownContainer);
       card.appendChild(link);
 
-      myWinsContainer.appendChild(card);
+      myBidsContainer.appendChild(card);
     });
   } catch (error) {
     console.log(error);

@@ -49,8 +49,8 @@ async function updateUser(userDetails) {
     formSuccess.textContent = "Update successful. Redirecting to profile...";
 
     setTimeout(() => {
-      window.location.href = `./editProfile.html?name=${name}`;
-    }, 3000);
+      window.location.href = `./userProfile.html?name=${name}`;
+    }, 2000);
   } catch (error) {
     formSuccess.classList.add("hidden");
     formError.classList.remove("hidden");

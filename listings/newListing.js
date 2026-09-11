@@ -1,4 +1,5 @@
 import { post } from "../service/apiClient.js";
+import { name } from "../service/utils.js";
 
 const form = document.querySelector("#create-form");
 const formError = document.querySelector("#formError");
@@ -12,6 +13,10 @@ async function createListing(listingDetails) {
 
     formSuccess.textContent = "Listing created successfully!";
     formSuccess.classList.remove("hidden");
+
+    setTimeout(() => {
+      window.location.href = `../profile/myProfile.html?name=${name}`;
+    }, 2000);
 
     console.log(response);
 

@@ -50,100 +50,48 @@
           class="my-2 hidden rounded border border-green-700 bg-green-100 p-3 text-green-700"
         ></p>
         <div class="flex flex-col">
-          <label for="name">Name *</label>
+          <label for="name">Name</label>
           <input
             id="name"
             name="name"
             type="text"
             required
             minlength="1"
-            placeholder="name nameson"
-            class="mb-2 h-10 rounded-sm border border-gray-300 bg-white p-2 shadow-inner"
+            class="h-10 rounded-sm border border-gray-300 bg-white p-2 shadow-inner"
           />
+          <p class="mb-2 text-sm text-gray-500">
+            Letters, numbers and underscore only
+          </p>
           <p id="nameError" class="mb-1 hidden text-sm text-red-600"></p>
         </div>
 
         <div class="flex flex-col">
-          <label for="email">Email *</label>
+          <label for="email">Email</label>
           <input
             id="email"
             name="email"
             type="email"
             required
             placeholder="example@stud.noroff.no"
-            class="mb-2 h-10 rounded-sm border border-gray-300 bg-white p-2 shadow-inner"
+            class="h-10 rounded-sm border border-gray-300 bg-white p-2 shadow-inner"
           />
+          <p class="mb-2 text-sm text-gray-500">Must be a stud.noroff email</p>
           <p id="emailError" class="mb-1 hidden text-sm text-red-600"></p>
         </div>
 
         <div class="flex flex-col">
-          <label for="password">Password *</label>
+          <label for="password">Password</label>
           <input
             id="password"
             name="password"
             type="password"
             required
-            placeholder="password"
-            class="mb-2 h-10 rounded-sm border border-gray-300 bg-white p-2 shadow-inner"
+            class="h-10 rounded-sm border border-gray-300 bg-white p-2 shadow-inner"
           />
+          <p class="mb-2 text-sm text-gray-500">
+            Must be at least 8 characters
+          </p>
           <p id="passwordError" class="mb-1 hidden text-sm text-red-600"></p>
-        </div>
-
-        <div class="flex flex-col">
-          <label for="bio">Bio</label>
-          <textarea
-            id="bio"
-            name="bio"
-            maxlength="159"
-            class="mb-2 h-10 rounded-sm border border-gray-300 bg-white p-2 shadow-inner"
-          ></textarea>
-          <p id="bioError" class="mb-1 hidden text-sm text-red-600"></p>
-        </div>
-
-        <div class="flex flex-col">
-          <label for="avatar-url">Avatar URL</label>
-          <input
-            id="avatar-url"
-            name="avatar-url"
-            type="url"
-            class="mb-2 h-10 rounded-sm border border-gray-300 bg-white p-2 shadow-inner"
-          />
-          <p id="avatarUrlError" class="mb-1 hidden text-sm text-red-600"></p>
-        </div>
-
-        <div class="flex flex-col">
-          <label for="avatar-alt">Avatar ALT</label>
-          <textarea
-            id="avatar-alt"
-            name="avatar-alt"
-            type="text"
-            maxlength="119"
-            class="mb-2 h-10 rounded-sm border border-gray-300 bg-white p-2 shadow-inner"
-          ></textarea>
-          <p id="avatarAltError" class="mb-1 hidden text-sm text-red-600"></p>
-        </div>
-
-        <div class="flex flex-col">
-          <label for="banner-url">Banner URL</label>
-          <input
-            id="banner-url"
-            name="banner-url"
-            type="url"
-            class="mb-2 h-10 rounded-sm border border-gray-300 bg-white p-2 shadow-inner"
-          />
-          <p id="bannerUrlError" class="mb-1 hidden text-sm text-red-600"></p>
-        </div>
-
-        <div class="flex flex-col">
-          <label for="banner-alt">Banner Description</label>
-          <textarea
-            id="banner-alt"
-            name="banner-alt"
-            type="text"
-            maxlength="119"
-            class="mb-2 h-10 rounded-sm border border-gray-300 bg-white p-2 shadow-inner"
-          ></textarea>
-          <p id="bannerAltError" class="mb-1 hidden text-sm text-red-600"></p>
         </div>
 
         <button

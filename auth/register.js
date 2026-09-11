@@ -3,20 +3,8 @@ import {
   validateName,
   validateEmail,
   validatePassword,
-  validateBio,
-  validateAvatar,
-  validateBanner,
 } from "../service/validators.js";
-import {
-  nameInput,
-  emailInput,
-  passwordInput,
-  bioInput,
-  avatarUrlInput,
-  avatarAltInput,
-  bannerUrlInput,
-  bannerAltInput,
-} from "../service/validators.js";
+import { nameInput, emailInput, passwordInput } from "../service/validators.js";
 
 const form = document.querySelector("#register-form");
 const formError = document.querySelector("#formError");
@@ -33,8 +21,8 @@ async function registerNewUser(userDetails) {
       "Registration successful. Redirecting to login...";
 
     setTimeout(() => {
-      window.location.href = "./auth/login.html";
-    }, 3000);
+      window.location.href = "./login.html";
+    }, 2000);
   } catch (error) {
     formSuccess.classList.add("hidden");
     formError.classList.remove("hidden");
@@ -49,17 +37,8 @@ function submitForm(event) {
   const isNameValid = validateName();
   const isEmailValid = validateEmail();
   const isPasswordValid = validatePassword();
-  const isBioValid = validateBio();
-  const isAvatarValid = validateAvatar();
-  const isBannerValid = validateBanner();
 
-  const isFormValid =
-    isNameValid &&
-    isEmailValid &&
-    isPasswordValid &&
-    isBioValid &&
-    isAvatarValid &&
-    isBannerValid;
+  const isFormValid = isNameValid && isEmailValid && isPasswordValid;
 
   if (!isFormValid) {
     return;
@@ -70,21 +49,6 @@ function submitForm(event) {
     email: emailInput.value.trim(),
     password: passwordInput.value.trim(),
   };
-  if (bioInput.value.trim()) {
-    userdata.bio = bioInput.value.trim();
-  }
-  if (avatarUrlInput.value.trim()) {
-    userdata.avatar = {
-      url: avatarUrlInput.value.trim(),
-      alt: avatarAltInput.value.trim(),
-    };
-  }
-  if (bannerUrlInput.value.trim()) {
-    userdata.banner = {
-      url: bannerUrlInput.value.trim(),
-      alt: bannerAltInput.value.trim(),
-    };
-  }
 
   registerNewUser(userdata);
   console.log(userdata);

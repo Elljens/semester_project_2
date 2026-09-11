@@ -20,19 +20,19 @@
   </head>
   <body>
     <header
-      class="sticky top-0 z-30 h-30 items-center bg-gray-200 p-10 shadow-sm"
+      class="sticky top-0 z-30 h-30 items-center bg-gray-200 p-10 px-5 shadow-sm"
     >
       <div class="flex items-center justify-between">
         <div>
           <a href="index.html"
-            ><img src="public/Logo.png" alt="logo" class="h-12"
+            ><img src="public/Logo.png" alt="logo" class="h-10 sm:h-12"
           /></a>
         </div>
         <nav id="logged-out-nav" class="flex hidden gap-2">
-          <a href="auth/register.html" class="text-md text-hidden font-medium"
+          <a href="auth/register.html" class="text-md font-medium"
             ><i class="fa-solid fa-user-plus"></i>Register</a
           >
-          <a href="auth/login.html" class="text-l font-medium"
+          <a href="auth/login.html" class="text-md font-medium"
             ><i class="fa-solid fa-user"></i>Log in</a
           >
         </nav>
@@ -59,9 +59,9 @@
           </div>
           <div
             id="user-menu"
-            class="bg-accent absolute right-5 z-50 mt-15 hidden rounded-md py-2 shadow-md"
+            class="bg-accent absolute right-3 z-50 mt-40 hidden rounded-md py-2 shadow-md"
           >
-            <a href="./profile/userProfile.html" class="block px-4 py-2"
+            <a href="./profile/myProfile.html" class="block px-4 py-2"
               >My profile</a
             >
             <button
@@ -76,14 +76,14 @@
       </div>
     </header>
     <main class="bg-accent min-h-screen pb-20">
-      <div class="bg-brand-100 mb-6 flex flex-row justify-center gap-4 p-3">
+      <div class="bg-brand-100 mb-5 flex flex-row justify-center gap-2 p-2">
         <div class="flex flex-col md:flex-row">
           <label for="searchInput" class="pr-2">Search listings:</label>
           <input
             type="search"
             id="searchInput"
             placeholder="Search..."
-            class="rounded-lg border border-gray-300 bg-white px-3 py-1"
+            class="rounded-lg border border-gray-300 bg-white px-2 py-1"
           />
         </div>
 
@@ -101,7 +101,7 @@
 
       <div
         id="all-items-container"
-        class="mx-auto grid w-full max-w-300 gap-5 p-15 sm:grid-cols-2 md:px-30 lg:grid-cols-3 xl:grid-cols-4"
+        class="mx-auto grid w-full max-w-300 gap-5 p-5 px-15 sm:grid-cols-2 md:px-30 lg:grid-cols-3 xl:grid-cols-4"
       ></div>
       <button
         id="load-more-button"

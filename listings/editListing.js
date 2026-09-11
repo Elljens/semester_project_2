@@ -1,4 +1,5 @@
 import { put, get } from "../service/apiClient.js";
+import { name } from "../service/utils.js";
 
 const editForm = document.querySelector("#edit-form");
 const title = document.querySelector("#title");
@@ -44,8 +45,12 @@ async function editListing(listingDetails) {
 
     formError.classList.add("hidden");
 
-    formSuccess.textContent = "Listing created successfully!";
+    formSuccess.textContent = "Listing edited successfully!";
     formSuccess.classList.remove("hidden");
+
+    setTimeout(() => {
+      window.location.href = `../profile/myProfile.html?name=${name}`;
+    }, 2000);
 
     console.log(response);
 

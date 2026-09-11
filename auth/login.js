@@ -17,6 +17,7 @@ async function logInUSer(userDetails) {
 
     await createAPIKey();
 
+    formError.classList.add("hidden");
     formSuccess.classList.remove("hidden");
     formSuccess.textContent = "Login successful. Redirecting to main page..";
 

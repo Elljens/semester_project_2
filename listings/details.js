@@ -44,7 +44,7 @@ async function getListing() {
     );
 
     const seller = document.createElement("p");
-    seller.textContent = "Seller: " + listing.seller.name;
+    seller.textContent = "Seller: ";
     seller.classList.add(
       "font-heading",
       "font-medium",
@@ -52,6 +52,13 @@ async function getListing() {
       "text-center",
       "md:text-left",
     );
+
+    const sellerLink = document.createElement("a");
+    sellerLink.textContent = listing.seller.name;
+    sellerLink.href = `../profile/sellerProfile.html?name=${encodeURIComponent(listing.seller.name)}`;
+    sellerLink.classList.add("text-brand", "cursor-pointer");
+
+    seller.appendChild(sellerLink);
 
     const created = document.createElement("p");
     created.textContent =
@@ -140,7 +147,7 @@ async function getListing() {
     bidInput.name = "amount";
     bidInput.min = highestBid + 1;
     bidInput.required = true;
-    bidInput.classList.add("border", "rounded-l-md", "shadow-md");
+    bidInput.classList.add("border", "rounded-l-md", "shadow-md", "p-2");
 
     const bidButton = document.createElement("button");
     bidButton.type = "submit";

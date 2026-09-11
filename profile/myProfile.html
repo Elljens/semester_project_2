@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>GoingOnce - My profile</title>
+    <script
+      src="https://kit.fontawesome.com/ec3d7ec6ab.js"
+      crossorigin="anonymous"
+    ></script>
+    <link rel="stylesheet" href="../css/style.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Akshar:wght@300..700&display=swap"
+      rel="stylesheet"
+    />
+    <script type="module" src="./myProfile.js"></script>
+  </head>
+  <body>
+    <header class="h-30 bg-gray-300 p-10">
+      <nav class="flex items-center justify-between">
+        <div>
+          <a href="../index.html"
+            ><img src="../public/Logo.png" alt="logo" class="h-15"
+          /></a>
+        </div>
+        <div class="flex gap-6">
+          <a href="../auth/register.html" class="font-heading text-l"
+            ><i class="fa-solid fa-user-plus fa-lg text-brand pr-1"></i
+            >Register</a
+          >
+          <a href="../auth/login.html" class="font-heading text-l"
+            ><i class="fa-solid fa-user fa-lg text-brand pr-1"></i>Log in</a
+          >
+        </div>
+      </nav>
+    </header>
+    <main class="bg-accent mx-auto min-h-screen">
+      <div class="flex max-w-650 flex-col p-10">
+        <div
+          id="profile-container"
+          class="mx-auto flex max-w-650 flex-col rounded-lg bg-white shadow-md"
+        ></div>
+        <div
+          id="button-container"
+          class="mx-auto flex w-full max-w-300 flex-col justify-between px-10 sm:flex-row md:px-20"
+        >
+          <h1 class="font-heading pt-8 text-xl font-medium">My Listings</h1>
+          <a
+            href="../listings/newListing.html"
+            class="font-heading text-brand text-lg font-medium sm:pt-8"
+            >Create new listing</a
+          >
+        </div>
+        <div
+          id="my-listings-container"
+          class="mx-auto grid w-full max-w-300 grid-cols-1 gap-5 px-10 sm:grid-cols-2 md:px-20 lg:grid-cols-3"
+        ></div>
+        <div
+          class="mx-auto flex w-full max-w-300 flex-col justify-start px-10 sm:flex-row md:px-20"
+        >
+          <h1 class="font-heading pt-8 text-xl font-medium">
+            Auctions I have bid on
+          </h1>
+        </div>
+        <div
+          id="my-bids-container"
+          class="mx-auto grid w-full max-w-300 grid-cols-1 gap-5 px-10 sm:grid-cols-2 md:px-20 lg:grid-cols-3"
+        ></div>
+      </div>
+    </main>
+  </body>
+</html>
