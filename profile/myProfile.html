@@ -16,25 +16,62 @@
       rel="stylesheet"
     />
     <script type="module" src="./myProfile.js"></script>
+    <script type="module" src="../service/header.js"></script>
   </head>
   <body>
-    <header class="h-30 bg-gray-300 p-10">
-      <nav class="flex items-center justify-between">
+    <header
+      class="sticky top-0 z-30 h-30 items-center bg-gray-200 p-10 px-5 shadow-sm"
+    >
+      <div class="flex items-center justify-between">
         <div>
           <a href="../index.html"
-            ><img src="../public/Logo.png" alt="logo" class="h-15"
+            ><img src="../public/Logo.png" alt="logo" class="h-10 sm:h-12"
           /></a>
         </div>
-        <div class="flex gap-6">
-          <a href="../auth/register.html" class="font-heading text-l"
-            ><i class="fa-solid fa-user-plus fa-lg text-brand pr-1"></i
-            >Register</a
+        <nav id="logged-out-nav" class="flex hidden gap-2">
+          <a href="../auth/register.html" class="text-md font-medium"
+            ><i class="fa-solid fa-user-plus"></i>Register</a
           >
-          <a href="../auth/login.html" class="font-heading text-l"
-            ><i class="fa-solid fa-user fa-lg text-brand pr-1"></i>Log in</a
+          <a href="../auth/login.html" class="text-md font-medium"
+            ><i class="fa-solid fa-user"></i>Log in</a
           >
-        </div>
-      </nav>
+        </nav>
+        <nav id="logged-in-nav" class="flex items-center">
+          <div class="pr-3 text-right">
+            <p id="header-name" class="font-heading font-regular"></p>
+            <p id="header-credit" class="font-heading font-medium"></p>
+          </div>
+          <div class="relative">
+            <button
+              id="avatar-button"
+              type="button"
+              aria-label="open user menu"
+              aria-expanded="false"
+              class="block rounded-full"
+            >
+              <img
+                id="header-avatar"
+                src="../public/no_image.png"
+                alt="user-avatar"
+                class="h-15 w-15 rounded-full object-cover"
+              />
+            </button>
+          </div>
+          <div
+            id="user-menu"
+            class="bg-accent absolute right-3 z-50 mt-40 hidden rounded-md py-2 shadow-md"
+          >
+            <a href="./myProfile.html" class="block px-4 py-2">My profile</a>
+            <button
+              id="logout-button"
+              type="button"
+              class="block w-full px-4 py-2 text-left"
+            >
+              Log out
+            </button>
+          </div>
+        </nav>
+      </div>
     </header>
     <main class="bg-accent mx-auto min-h-screen">
       <div class="flex max-w-650 flex-col p-10">
@@ -53,6 +90,7 @@
             >Create new listing</a
           >
         </div>
+        <div class="bg-brand-100 mb-5 h-1"></div>
         <div
           id="my-listings-container"
           class="mx-auto grid w-full max-w-300 grid-cols-1 gap-5 px-10 sm:grid-cols-2 md:px-20 lg:grid-cols-3"
@@ -64,6 +102,7 @@
             Auctions I have bid on
           </h1>
         </div>
+        <div class="bg-brand-100 mb-5 h-1"></div>
         <div
           id="my-bids-container"
           class="mx-auto grid w-full max-w-300 grid-cols-1 gap-5 px-10 sm:grid-cols-2 md:px-20 lg:grid-cols-3"

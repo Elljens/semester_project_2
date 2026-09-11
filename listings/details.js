@@ -55,8 +55,20 @@ async function getListing() {
 
     const sellerLink = document.createElement("a");
     sellerLink.textContent = listing.seller.name;
-    sellerLink.href = `../profile/sellerProfile.html?name=${encodeURIComponent(listing.seller.name)}`;
+    sellerLink.href = "#";
     sellerLink.classList.add("text-brand", "cursor-pointer");
+
+    sellerLink.addEventListener("click", (event) => {
+      event.preventDefault();
+
+      const accessToken = getFromLocalStorage("accessToken");
+
+      if (accessToken) {
+        window.location.href = `../profile/sellerProfile.html?name=${encodeURIComponent(listing.seller.name)}`;
+      } else {
+        alert("You need to log in to view seller profiles");
+      }
+    });
 
     seller.appendChild(sellerLink);
 
@@ -111,7 +123,7 @@ async function getListing() {
     bids.classList.add(
       "font-heading",
       "font-medium",
-      "text-2xl",
+      "text-xl",
       "text-brand",
       "p-5",
     );
@@ -121,7 +133,7 @@ async function getListing() {
     credit.classList.add(
       "font-heading",
       "font-medium",
-      "text-2xl",
+      "text-xl",
       "text-brand",
       "p-5",
     );
@@ -132,7 +144,7 @@ async function getListing() {
       : 0;
 
     const bidForm = document.createElement("form");
-    bidForm.classList.add("flex", "flex-col", "mx-auto", "gap-3", "p-5");
+    bidForm.classList.add("flex", "flex-col", "mx-auto", "p-3");
 
     const placeBid = document.createElement("div");
     placeBid.classList.add("flex", "flex-row", "py-2");
@@ -151,11 +163,11 @@ async function getListing() {
 
     const bidButton = document.createElement("button");
     bidButton.type = "submit";
-    bidButton.textContent = "Place bid";
+    bidButton.textContent = "BID";
     bidButton.classList.add(
       "bg-brand",
       "text-white",
-      "px-5",
+      "px-4",
       "py-2",
       "rounded-r-md",
       "cursor-pointer",
@@ -163,6 +175,7 @@ async function getListing() {
     );
 
     const bidMessage = document.createElement("p");
+    bidMessage.classList.add("text-red-700");
 
     placeBid.appendChild(bidInput);
     placeBid.appendChild(bidButton);

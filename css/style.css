@@ -334,6 +334,12 @@
     width: calc(var(--spacing) * 16);
     height: calc(var(--spacing) * 16);
   }
+  .h-1 {
+    height: var(--spacing);
+  }
+  .h-2 {
+    height: calc(var(--spacing) * 2);
+  }
   .h-10 {
     height: calc(var(--spacing) * 10);
   }

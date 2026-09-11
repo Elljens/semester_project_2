@@ -24,8 +24,6 @@ async function getListingToEdit() {
     const result = await get(`/auction/listings/${id}`);
     const edits = result.data;
 
-    console.log(edits);
-
     title.value = edits.title;
     description.value = edits.description;
     tags.value = edits.tags;
@@ -51,8 +49,6 @@ async function editListing(listingDetails) {
     setTimeout(() => {
       window.location.href = `../profile/myProfile.html?name=${name}`;
     }, 2000);
-
-    console.log(response);
 
     editForm.reset();
   } catch (error) {

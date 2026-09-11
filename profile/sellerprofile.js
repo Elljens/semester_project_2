@@ -1,8 +1,8 @@
 import { get } from "../service/apiClient.js";
 
 const profileContainer = document.getElementById("profile-container");
-const myListingContainer = document.getElementById("my-listings-container");
-const myBidsContainer = document.getElementById("my-bids-container");
+const myListingContainer = document.getElementById("listings-container");
+const myBidsContainer = document.getElementById("bids-container");
 
 const params = new URLSearchParams(window.location.search);
 const name = params.get("name");
@@ -110,6 +110,10 @@ async function getProfile() {
       image.alt = listing.media?.[0]?.alt || listing.title;
       image.classList.add("h-65", "object-cover");
 
+      image.onerror = () => {
+        image.src = "../public/no_image.png";
+      };
+
       const title = document.createElement("h3");
       title.textContent = listing.title;
       title.classList.add(
@@ -174,6 +178,10 @@ async function getProfile() {
       image.src = listing.media?.[0]?.url || "../public/no_image.png";
       image.alt = listing.media?.[0]?.alt || listing.title;
       image.classList.add("h-65", "object-cover");
+
+      image.onerror = () => {
+        image.src = "../public/no_image.png";
+      };
 
       const title = document.createElement("h3");
       title.textContent = listing.title;

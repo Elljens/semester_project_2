@@ -76,7 +76,7 @@ function renderItems(itemsToRender) {
     );
 
     const image = document.createElement("img");
-    image.src = item.media?.[0]?.url || "../public/no_image.png";
+    image.src = item.media?.[0]?.url || "./public/no_image.png";
     image.alt = item.media?.[0]?.alt || item.title;
 
     image.classList.add(
@@ -88,7 +88,7 @@ function renderItems(itemsToRender) {
     );
 
     image.onerror = () => {
-      image.src = "../public/no_image.png";
+      image.src = "./public/no_image.png";
     };
 
     const bidContainer = document.createElement("div");

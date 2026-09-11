@@ -62,7 +62,11 @@ logOutButton?.addEventListener("click", () => {
   localStorage.removeItem("name");
   localStorage.removeItem("APIKey");
 
-  window.location.href = "index.html";
+  alert("You are logged out");
+
+  const isHomePage = window.location.pathname.endsWith("./index.html");
+
+  window.location.href = isHomePage ? "./index.html" : "../index.html";
 });
 
 updateHeader();
