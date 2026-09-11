@@ -49,7 +49,7 @@ async function updateUser(userDetails) {
     formSuccess.textContent = "Update successful. Redirecting to profile...";
 
     setTimeout(() => {
-      window.location.href = `./userProfile.html?name=${name}`;
+      window.location.href = `./myProfile.html?name=${name}`;
     }, 2000);
   } catch (error) {
     formSuccess.classList.add("hidden");
@@ -90,7 +90,6 @@ function submitForm(event) {
   }
 
   updateUser(userdata);
-  console.log(userdata);
 }
 
 form.addEventListener("submit", submitForm);
