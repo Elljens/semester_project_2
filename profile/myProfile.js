@@ -20,7 +20,7 @@ async function getProfile() {
     banner.classList.add("w-full", "h-100", "object-cover", "rounded-t-lg");
 
     const user = document.createElement("div");
-    user.classList.add("flex");
+    user.classList.add("flex", "flex-col", "sm:flex-row");
 
     const avatar = document.createElement("img");
     avatar.src = profile.avatar.url;
@@ -32,13 +32,14 @@ async function getProfile() {
 
     const userName = document.createElement("h1");
     userName.textContent = profile.name;
-    userName.classList.add("font-heading", "font-medium", "text-xl");
+    userName.classList.add("font-heading", "font-medium", "text-xl", "py-3");
 
     const userEmail = document.createElement("p");
     userEmail.textContent = profile.email;
 
     const bio = document.createElement("p");
     bio.textContent = profile.bio || "No bio added";
+    bio.classList.add("max-w-lg", "py-3");
 
     const profileBox = document.createElement("div");
 
@@ -48,13 +49,13 @@ async function getProfile() {
       "font-heading",
       "font-medium",
       "text-xl",
-      "pl-23",
+      "pl-3",
       "pt-5",
     );
 
     const editButton = document.createElement("button");
     editButton.textContent = "Edit profile";
-    editButton.classList.add("font-heading", "text-brand", "text-lg", "pl-23");
+    editButton.classList.add("font-heading", "text-brand", "text-lg", "pl-3");
 
     editButton.addEventListener("click", () => {
       window.location.href = `./editProfile.html?name=${name}`;

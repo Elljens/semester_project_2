@@ -1,6 +1,6 @@
 import { get, post } from "../service/apiClient.js";
 import { Countdown } from "../service/countdown.js";
-import { getFromLocalStorage } from "../service/utils.js";
+import { getFromLocalStorage, accessToken } from "../service/utils.js";
 
 const listingContainer = document.getElementById("listing-container");
 const card = document.getElementById("card");
@@ -17,20 +17,70 @@ async function getListing() {
     const result = await get(`/auction/listings/${id}?_seller=true&_bids=true`);
     const listing = result.data;
 
-    const image = document.createElement("img");
-    image.src = listing.media?.[0]?.url || "../public/no_image.png";
-    image.alt = listing.media?.[0]?.alt || listing.title;
-    image.classList.add(
+    const imageGallery = document.createElement("div");
+    imageGallery.classList.add("flex", "flex-col", "gap-4");
+
+    const mainImage = document.createElement("img");
+    if (listing.media.length > 0) {
+      mainImage.src = listing.media[0].url;
+      mainImage.alt = listing.media[0].alt || listing.title;
+    } else {
+      mainImage.src = "../public/no_image.png";
+      mainImage.alt = "No image available";
+    }
+
+    mainImage.classList.add(
       "h-65",
       "max-w-80",
       "object-cover",
       "shadow-md",
       "rounded-lg",
       "m-5",
+      "mx-auto",
+      "md:ml-5",
     );
-    image.onerror = () => {
+
+    mainImage.onerror = () => {
       image.src = "../public/no_image.png";
     };
+
+    imageGallery.appendChild(mainImage);
+
+    if (listing.media.length > 1) {
+      const thumbnailContainer = document.createElement("div");
+      thumbnailContainer.classList.add(
+        "flex",
+        "gap-3",
+        "overflow-x-auto",
+        "mx-auto",
+        "md:ml-5",
+      );
+
+      listing.media.forEach((media) => {
+        const thumbnailButton = document.createElement("button");
+        thumbnailButton.type = "button";
+
+        const thumbnail = document.createElement("img");
+        thumbnail.src = media.url;
+        thumbnail.alt = media.url || listing.title;
+        thumbnail.classList.add(
+          "w-20",
+          "h-20",
+          "object-cover",
+          "rounded-md",
+          "cursor-pointer",
+        );
+
+        thumbnailButton.addEventListener("click", () => {
+          mainImage.src = media.url;
+          mainImage.alt = media.alt || listing.title;
+        });
+
+        thumbnailButton.appendChild(thumbnail);
+        thumbnailContainer.appendChild(thumbnailButton);
+      });
+      imageGallery.appendChild(thumbnailContainer);
+    }
 
     const title = document.createElement("h1");
     title.textContent = listing.title;
@@ -41,6 +91,8 @@ async function getListing() {
       "md:text-3xl",
       "text-center",
       "md:text-left",
+      "p-5",
+      "max-w-100",
     );
 
     const seller = document.createElement("p");
@@ -51,6 +103,7 @@ async function getListing() {
       "text-xl",
       "text-center",
       "md:text-left",
+      "md:px-5",
     );
 
     const sellerLink = document.createElement("a");
@@ -60,8 +113,6 @@ async function getListing() {
 
     sellerLink.addEventListener("click", (event) => {
       event.preventDefault();
-
-      const accessToken = getFromLocalStorage("accessToken");
 
       if (accessToken) {
         window.location.href = `../profile/sellerProfile.html?name=${encodeURIComponent(listing.seller.name)}`;
@@ -75,7 +126,7 @@ async function getListing() {
     const created = document.createElement("p");
     created.textContent =
       "Listed: " + new Date(listing.created).toLocaleString();
-    created.classList.add("text-center", "md:text-left");
+    created.classList.add("text-center", "md:text-left", "md:px-5");
 
     const infoContainer = document.createElement("div");
     infoContainer.classList.add("md:pr-5", "md:py-15");
@@ -267,7 +318,7 @@ async function getListing() {
     infoContainer.appendChild(seller);
     infoContainer.appendChild(created);
 
-    infoBox.appendChild(image);
+    infoBox.appendChild(imageGallery);
     infoBox.appendChild(infoContainer);
 
     countdownContainer.appendChild(countdownText);

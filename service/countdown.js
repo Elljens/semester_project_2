@@ -1,6 +1,8 @@
 function startCountdown(endDate, element) {
   const endTime = new Date(endDate).getTime();
 
+  let interval = [];
+
   function updateCountdown() {
     const now = Date.now();
     const timeLeft = endTime - now;
@@ -23,7 +25,7 @@ function startCountdown(endDate, element) {
 
   updateCountdown();
 
-  const interval = setInterval(updateCountdown, 1000);
+  interval = setInterval(updateCountdown, 1000);
 }
 
 export const Countdown = (endDate, element) => startCountdown(endDate, element);

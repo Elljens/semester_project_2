@@ -64,7 +64,9 @@ logOutButton?.addEventListener("click", () => {
 
   alert("You are logged out");
 
-  const isHomePage = window.location.pathname.endsWith("./index.html");
+  const isHomePage =
+    window.location.pathname.endsWith("./index.html") ||
+    window.location.pathname.endsWith("/");
 
   window.location.href = isHomePage ? "./index.html" : "../index.html";
 });

@@ -29,6 +29,7 @@
     --container-lg: 32rem;
     --container-xl: 36rem;
     --container-2xl: 42rem;
+    --container-3xl: 48rem;
     --text-sm: 0.875rem;
     --text-sm--line-height: calc(1.25 / 0.875);
     --text-base: 1rem;
@@ -427,6 +428,9 @@
   .max-w-2xl {
     max-width: var(--container-2xl);
   }
+  .max-w-3xl {
+    max-width: var(--container-3xl);
+  }
   .max-w-80 {
     max-width: calc(var(--spacing) * 80);
   }
@@ -525,6 +529,9 @@
   }
   .overflow-hidden {
     overflow: hidden;
+  }
+  .overflow-x-auto {
+    overflow-x: auto;
   }
   .rounded {
     border-radius: 0.25rem;
@@ -705,6 +712,12 @@
   .pb-20 {
     padding-bottom: calc(var(--spacing) * 20);
   }
+  .pl-3 {
+    padding-left: calc(var(--spacing) * 3);
+  }
+  .pl-5 {
+    padding-left: calc(var(--spacing) * 5);
+  }
   .pl-20 {
     padding-left: calc(var(--spacing) * 20);
   }
@@ -823,6 +836,9 @@
     .sm\:flex-row {
       flex-direction: row;
     }
+    .sm\:items-center {
+      align-items: center;
+    }
     .sm\:p-10 {
       padding: calc(var(--spacing) * 10);
     }
@@ -843,6 +859,9 @@
     }
   }
   @media (width >= 48rem) {
+    .md\:ml-5 {
+      margin-left: calc(var(--spacing) * 5);
+    }
     .md\:h-12 {
       height: calc(var(--spacing) * 12);
     }
@@ -854,6 +873,9 @@
     }
     .md\:flex-row {
       flex-direction: row;
+    }
+    .md\:px-5 {
+      padding-inline: calc(var(--spacing) * 5);
     }
     .md\:px-20 {
       padding-inline: calc(var(--spacing) * 20);
@@ -869,6 +891,9 @@
     }
     .md\:pr-5 {
       padding-right: calc(var(--spacing) * 5);
+    }
+    .md\:pl-5 {
+      padding-left: calc(var(--spacing) * 5);
     }
     .md\:text-left {
       text-align: left;

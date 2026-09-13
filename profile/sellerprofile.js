@@ -25,7 +25,7 @@ async function getProfile() {
     banner.classList.add("w-full", "h-100", "object-cover", "rounded-t-lg");
 
     const user = document.createElement("div");
-    user.classList.add("flex");
+    user.classList.add("flex", "flex-col", "sm:flex-row");
 
     const avatar = document.createElement("img");
     avatar.src = profile.avatar.url;
@@ -37,25 +37,20 @@ async function getProfile() {
 
     const userName = document.createElement("h1");
     userName.textContent = profile.name;
-    userName.classList.add("font-heading", "font-medium", "text-xl");
+    userName.classList.add("font-heading", "font-medium", "text-xl", "py-3");
 
     const userEmail = document.createElement("p");
     userEmail.textContent = profile.email;
 
     const bio = document.createElement("p");
     bio.textContent = profile.bio || "No bio added";
+    bio.classList.add("py-3", "max-w-lg");
 
     const profileBox = document.createElement("div");
 
     const credit = document.createElement("h2");
     credit.textContent = "Credit: " + profile.credits;
-    credit.classList.add(
-      "font-heading",
-      "font-medium",
-      "text-xl",
-      "pl-23",
-      "pt-5",
-    );
+    credit.classList.add("font-heading", "font-medium", "text-xl", "p-3");
 
     const userBox = document.createElement("div");
     userBox.classList.add(

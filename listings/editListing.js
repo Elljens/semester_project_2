@@ -25,17 +25,105 @@ async function getListingToEdit() {
     const edits = result.data;
 
     title.value = edits.title;
-    description.value = edits.description;
-    tags.value = edits.tags;
-    mediaURL.value = edits.media?.[0]?.url || "";
-    mediaALT.value = edits.media?.[0]?.alt || "";
+    description.value = edits.description || "";
+    tags.value = edits.tags || "";
     endsAt.value = edits.endsAt.slice(0, 16);
+
+    const media = edits.media || [];
+    if (media.length > 0) {
+      mediaURL.value = media?.[0]?.url || "";
+      mediaALT.value = media?.[0]?.alt || "";
+    }
+
+    media.slice(1).forEach((image, index) => {
+      createMediaRow(image, index + 2);
+    });
   } catch (error) {
     console.log(error);
   }
 }
 
 getListingToEdit();
+
+const mediaFields = document.getElementById("media-fields");
+const addImageButton = document.getElementById("add-image");
+
+let imageIndex = 2;
+
+function createMediaRow(image = {}, index) {
+  addImageButton.addEventListener("click", () => {
+    const mediaRow = document.createElement("div");
+
+    mediaRow.classList.add("mx-auto", "flex", "max-w-md", "flex-col");
+
+    const urlContainer = document.createElement("div");
+    urlContainer.classList.add("flex", "flex-col");
+
+    const urlLabel = document.createElement("label");
+    urlLabel.textContent = "Image URL";
+
+    const urlInput = document.createElement("input");
+    urlInput.type = "url";
+    urlInput.name = "mediaUrl";
+    urlInput.id = `media-url-${index}`;
+    urlInput.value = image.url || "";
+    urlInput.classList.add(
+      "mb-3",
+      "h-10",
+      "rounded-sm",
+      "border",
+      "border-gray-300",
+      "bg-white",
+      "p-2",
+      "shadow-inner",
+    );
+    urlLabel.htmlFor = urlInput.id;
+
+    urlContainer.append(urlLabel, urlInput);
+
+    const altContainer = document.createElement("div");
+    altContainer.classList.add("flex", "flex-col");
+
+    const altLabel = document.createElement("label");
+    altLabel.textContent = "Image Description";
+
+    const altInput = document.createElement("input");
+    altInput.type = "text";
+    altInput.name = "mediaAlt";
+    altInput.value = image.alt || "";
+    altInput.classList.add(
+      "mb-3",
+      "h-10",
+      "rounded-sm",
+      "border",
+      "border-gray-300",
+      "bg-white",
+      "p-2",
+      "shadow-inner",
+    );
+
+    altLabel.htmlFor = altInput.id;
+
+    altContainer.append(altLabel, altInput);
+
+    const removeButton = document.createElement("button");
+    removeButton.type = "button";
+    removeButton.textContent = "Remove";
+
+    removeButton.addEventListener("click", () => {
+      mediaRow.remove();
+    });
+
+    mediaRow.append(urlContainer, altContainer, removeButton);
+
+    mediaFields.appendChild(mediaRow);
+  });
+}
+
+addImageButton.addEventListener("click", () => {
+  createMediaRow({}, imageIndex);
+  imageIndex++;
+});
 
 async function editListing(listingDetails) {
   try {
@@ -83,14 +171,17 @@ function submitForm(event) {
       .filter(Boolean);
   }
 
-  if (formFields.mediaUrl.trim()) {
-    listingDetails.media = [
-      {
-        url: formFields.mediaUrl.trim(),
-        alt: formFields.mediaAlt.trim(),
-      },
-    ];
-  }
+  const mediaUrls = formData.getAll("mediaUrl");
+  const mediaAlts = formData.getAll("mediaAlt");
+
+  const media = mediaUrls
+    .map((url, index) => ({
+      url: url.trim(),
+      alt: mediaAlts[index]?.trim || "",
+    }))
+    .filter((image) => image.url);
+
+  listingDetails.media = media;
 
   editListing(listingDetails);
 }
