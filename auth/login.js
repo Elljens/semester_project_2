@@ -24,8 +24,6 @@ async function logInUSer(userDetails) {
     setTimeout(() => {
       window.location.href = "../index.html";
     }, 2000);
-
-    console.log("Login successful");
   } catch (error) {
     formSuccess.classList.add("hidden");
     formError.classList.remove("hidden");
