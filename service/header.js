@@ -64,11 +64,13 @@ logOutButton?.addEventListener("click", () => {
 
   alert("You are logged out");
 
-  const isHomePage =
-    window.location.pathname.endsWith("./index.html") ||
-    window.location.pathname.endsWith("/");
+  function getHome() {
+    const isGitHubPages = window.location.hostname.includes("github.io");
 
-  window.location.href = isHomePage ? "./index.html" : "../index.html";
+    return isGitHubPages ? "/semester_project_2/index.html" : "/index.html";
+  }
+
+  window.location.href = getHome();
 });
 
 updateHeader();
